@@ -1,0 +1,24 @@
+{
+    "name": "cloudflarednsedit",
+    "version": "0.0.1",
+    "description": "Simple Cloudflare DNS editor supporting regular interval checks and email notifications.",
+    "main": "dnsupdater.js",
+    "scripts": {},
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ParitoshBh/CloudflareDNSEdit.git"
+    },
+    "keywords": [
+        "cloudflare",
+        "dns",
+        "edit",
+        "dynamic",
+        "dns"
+    ],
+    "author": "Paritosh Bhatia",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/ParitoshBh/CloudflareDNSEdit/issues"
+    },
+    "homepage": "https://github.com/ParitoshBh/CloudflareDNSEdit#readme"
+}
