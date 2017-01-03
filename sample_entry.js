@@ -1,4 +1,4 @@
-const cloudflarednsedit = require('./cloudflarednsedit');
+const cloudflarednsedit = require('cloudflarednsedit');
 
 // Preferences and Cloudflare account details
 var userDetails = {
@@ -37,7 +37,20 @@ var userDetails = {
     // 1 minute = 60000 seconds
     // 1 day = 86400000 seconds
     // Note: When interval is larger than 2147483647 or less than 1, the delay will be set to 1
-    "updateInterval": 10000
+    "updateInterval": 10000,
+
+    // Optional configurations for Mailgun email notifications
+    // true -> email notifications will be sent using mailgun credentials below
+    // false -> no email notifications will be sent
+    "emailNotification": false,
+
+    "mailgun": {
+        "apiKey": "<YOUR_MAILGUN_API_KEY>",
+        "domain": "<YOUR_DOMAIN_NAME>",
+        "from": "<SOME_NAME> <EMAIL_ADDRESS(IN ANGULAR BRACKETS)>",
+        "to": "<EMAIL_ADDRESS>",
+        "subject": "<SOME_SUBJECT_LINE>"
+    }
 };
 
 // Start monitoring (and updating DNS as and when required!)
