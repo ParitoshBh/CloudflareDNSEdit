@@ -3,6 +3,7 @@ const dns = require('./helper/cloudflare/dns');
 const updater = require('./helper/cloudflare/updatedns');
 const wanip = require('./helper/waniplocator');
 const log = require('./helper/logging');
+const mailgun = require('./helper/mailer/mailgun');
 
 function startUpdater(userDetails) {
     // Check if we need to get the zone id or there's one given by user
@@ -62,9 +63,21 @@ function updateDNSRecord(userDetails, zoneDetails) {
     updater.editDNS(userDetails, zoneDetails).then(function(editDNSResponse) {
         // Log successful DNS update details
         log.dump(editDNSResponse);
+        // Send an email notification, if enabled
+        if (userDetails.emailNotification) {
+            log.dump('Sending email notification');
+            // Send an email with data from Cloudflare response
+            mailgun.sendEmail(userDetails.mailgun, 'success', editDNSResponse);
+        }
     }, function(errorData) {
         // Log error message
         log.dump(errorData);
+        // Send an email notification, if enabled
+        if (userDetails.emailNotification) {
+            log.dump('Sending email notification');
+            // Send an email with data from Cloudflare response
+            mailgun.sendEmail(userDetails.mailgun, 'error', errorData);
+        }
     });
 }
 
