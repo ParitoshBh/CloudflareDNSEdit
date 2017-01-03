@@ -3,24 +3,15 @@ const dns = require('./helper/cloudflare/dns');
 const updater = require('./helper/cloudflare/updatedns');
 const wanip = require('./helper/waniplocator');
 const log = require('./helper/logging');
-const config = require('./config');
 
-var updateInterval = config.updateInterval;
-
-// Attempt to run updater at each user defined interval
-setInterval(function() {
-    log.dump('Attempting to update Cloudflare DNS');
-    startUpdater();
-}, updateInterval);
-
-function startUpdater() {
+function startUpdater(userDetails) {
     // Check if we need to get the zone id or there's one given by user
-    if (config.zoneId === '') {
+    if (userDetails.zoneId === '') {
         // Fetch the zone id first
-        zones.fetchID(config).then(function(response) {
-            config.zoneId = response.id;
+        zones.fetchID(userDetails).then(function(response) {
+            userDetails.zoneId = response.id;
             // Fetch dns record with retrieved zone id
-            fetchDNSRecord(config);
+            fetchDNSRecord(userDetails);
         }, function(errorData) {
             // Log the error message
             log.dump(errorData);
@@ -29,7 +20,7 @@ function startUpdater() {
         // We'll use the zone id given by user
         // console.log('Using Zone Id given by the user:', config.zoneId);
         // Fetch dns record with retrieved zone id
-        fetchDNSRecord(config);
+        fetchDNSRecord(userDetails);
     }
 }
 
@@ -42,7 +33,7 @@ function fetchDNSRecord(userDetails) {
                 // console.log('Using extracted IP address:', ipAddress);
                 userDetails.content = ipAddress;
                 // Check if there's a need to update DNS or it is already in Sync
-                if (zoneDetails.content === ipAddress) {
+                if (isDNSMatching(zoneDetails.content, String(ipAddress))) {
                     // Skip DNS editing, since it is already up to date
                     log.dump('DNS is already in sync. Skipping DNS update.');
                 } else {
@@ -51,10 +42,15 @@ function fetchDNSRecord(userDetails) {
                 }
             });
         } else {
-            // We have ip address!
-            // console.log('Using the IP address provided');
             // We already have the ip address, we'll continue with updating dns
-            updateDNSRecord(userDetails, zoneDetails);
+            // Check if there's a need to update DNS or it is already in Sync
+            if (isDNSMatching(zoneDetails.content, String(userDetails.content))) {
+                // Skip DNS editing, since it is already up to date
+                log.dump('DNS is already in sync. Skipping DNS update.');
+            } else {
+                // There's a discrepency, update the DNS record
+                updateDNSRecord(userDetails, zoneDetails);
+            }
         }
     }, function(errorData) {
         // Log error message
@@ -62,12 +58,30 @@ function fetchDNSRecord(userDetails) {
     });
 }
 
-function updateDNSRecord(updatedUserDetails, zoneDetails) {
-    updater.editDNS(updatedUserDetails, zoneDetails).then(function(editDNSResponse) {
+function updateDNSRecord(userDetails, zoneDetails) {
+    updater.editDNS(userDetails, zoneDetails).then(function(editDNSResponse) {
         // Log successful DNS update details
         log.dump(editDNSResponse);
     }, function(errorData) {
         // Log error message
         log.dump(errorData);
     });
+}
+
+function isDNSMatching(cloudflareIP, userIP) {
+    if (cloudflareIP == userIP) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+module.exports.startMonitoring = function(userDetails) {
+    var updateInterval = userDetails.updateInterval;
+
+    // Attempt to run updater at each user defined interval
+    setInterval(function() {
+        log.dump('Attempting to update Cloudflare DNS');
+        startUpdater(userDetails);
+    }, updateInterval);
 }
