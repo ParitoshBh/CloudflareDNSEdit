@@ -1,1 +1,3 @@
-sample_entry.js
+node_modules/
+entry.js
+log.txt
