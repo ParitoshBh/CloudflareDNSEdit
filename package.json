@@ -1,6 +1,6 @@
 {
   "name": "cloudflarednsedit",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Simple Cloudflare DNS editor supporting regular interval checks and email notifications.",
   "main": "cloudflarednsedit.js",
   "scripts": {},
@@ -11,9 +11,7 @@
   "keywords": [
     "cloudflare",
     "dns",
-    "edit",
-    "dynamic",
-    "dns"
+    "dynamic dns"
   ],
   "author": "Paritosh Bhatia <paritosh@yopers.com> (https://yopers.com)",
   "license": "MIT",
