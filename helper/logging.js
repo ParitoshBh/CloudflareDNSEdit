@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 
 module.exports.dump = function(logMessage) {
-    const logFile = path.join(path.dirname(__dirname), 'log.txt');
+    const logFile = path.join(process.cwd(), 'log.txt');
 
     var currentDate = new Date().toLocaleString();
 
