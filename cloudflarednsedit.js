@@ -62,7 +62,7 @@ function fetchDNSRecord(userDetails) {
 function updateDNSRecord(userDetails, zoneDetails) {
     updater.editDNS(userDetails, zoneDetails).then(function(editDNSResponse) {
         // Log successful DNS update details
-        log.dump(editDNSResponse);
+        log.dump('DNS updated successfully to ' + editDNSResponse.content + ' for ' + editDNSResponse.name);
         // Send an email notification, if enabled
         if (userDetails.emailNotification) {
             log.dump('Sending email notification');
@@ -71,7 +71,7 @@ function updateDNSRecord(userDetails, zoneDetails) {
         }
     }, function(errorData) {
         // Log error message
-        log.dump(errorData);
+        log.dump('Unable to update DNS. Encountered following error:\n\n' + errorData);
         // Send an email notification, if enabled
         if (userDetails.emailNotification) {
             log.dump('Sending email notification');

@@ -7,7 +7,7 @@ module.exports.dump = function(logMessage) {
     var currentDate = new Date().toLocaleString();
 
     // Append current date, time and a new line to log message
-    logMessage = currentDate + ':\t\t' + logMessage + '\n';
+    logMessage = currentDate + ': ' + logMessage + '\n';
 
     // Open the success log file for writing (in append mode)
     //fs.open(path, flags[, mode], callback)
