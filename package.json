@@ -1,25 +1,29 @@
 {
-  "name": "cloudflarednsedit",
-  "version": "0.0.4",
-  "description": "Simple Cloudflare DNS editor supporting regular interval checks and email notifications (via mailgun).",
-  "main": "cloudflarednsedit.js",
-  "scripts": {},
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ParitoshBh/CloudflareDNSEdit.git"
-  },
-  "keywords": [
-    "cloudflare",
-    "dns",
-    "dynamic dns"
-  ],
-  "author": "Paritosh Bhatia <paritosh@yopers.com> (https://yopers.com)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ParitoshBh/CloudflareDNSEdit/issues"
-  },
-  "homepage": "https://github.com/ParitoshBh/CloudflareDNSEdit#readme",
-  "dependencies": {
-    "mailgun-js": "^0.8.0"
-  }
+    "name": "cloudflarednsedit",
+    "version": "0.0.4",
+    "description": "Simple Cloudflare DNS editor supporting regular interval checks and email notifications (via mailgun).",
+    "main": "cloudflarednsedit.js",
+    "scripts": {},
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ParitoshBh/CloudflareDNSEdit.git"
+    },
+    "keywords": [
+        "cloudflare",
+        "dns edit",
+        "dns update",
+        "dynamic dns"
+    ],
+    "engines": {
+        "node": ">=6.9.2"
+    },
+    "author": "Paritosh Bhatia <paritosh@yopers.com> (https://yopers.com)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/ParitoshBh/CloudflareDNSEdit/issues"
+    },
+    "homepage": "https://github.com/ParitoshBh/CloudflareDNSEdit#readme",
+    "dependencies": {
+        "mailgun-js": "^0.8.0"
+    }
 }
