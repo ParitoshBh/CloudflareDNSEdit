@@ -70,9 +70,9 @@ function fetchDNSRecord(userDetails) {
     });
 }
 
-function updateDNSRecord(userDetails, zoneDetails) {
+function updateDNSRecord(userDetails, zoneDetails, ipAddress) {
     log.dump('Attempting to edit DNS record with new one');
-    updater.editDNS(userDetails, zoneDetails).then(function(editDNSResponse) {
+    updater.editDNS(userDetails, zoneDetails, ipAddress).then(function(editDNSResponse) {
         // Log successful DNS update details
         log.dump('DNS updated successfully to ' + editDNSResponse.content + ' for ' + editDNSResponse.name);
         // Send an email notification, if enabled
