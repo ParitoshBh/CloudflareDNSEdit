@@ -7,17 +7,25 @@ Note that this module has a limited use case and that is for updating (not addin
 
 # Getting Started
 Before getting the module from npm, we need to do a couple of things,
+
 1. Make sure that Node.js (and npm) is installed on your server. I have tested this module on Node.js version 6.9.2.
+
 1. Since the module will be running continually, get a reliable process manager i.e. pm2 (in this case). A simple `npm install pm2 -g` would suffice.
 
 P.S - If you are having trouble running pm2 and are seeing error message */usr/bin/env: ‘node’: No such file or directory*, then its quite possible that you've got the legacy version of Node.js. [This thread](https://github.com/Unitech/pm2/issues/455) might be of some help.
 
 Now that we've the basic setup,
+
 1. Make a new directory `mkdir dnsupdater`
+
 1. cd into the newly created directory
+
 1. Get the module from npm using `npm install cloudflarednsedit --save`
+
 1. Create an `entry.js` file (sample entry.js file is shared below)
+
 1. Lastly start the entry.js with pm2 `pm2 start entry.js pm2 start app.js --name="Cloudflare Updater"`
+
 
 ```
 const cloudflarednsedit = require('cloudflarednsedit');
