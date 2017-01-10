@@ -11,7 +11,7 @@ function startUpdater(userDetails) {
         log.dump('Fetching Zone ID');
         // Fetch the zone id first
         zones.fetchID(userDetails).then(function(response) {
-            log.dump('Zone ID retrieved:', response.id);
+            log.dump('Zone ID retrieved: ' + response.id);
             userDetails.zoneId = response.id;
             // Fetch dns record with retrieved zone id
             fetchDNSRecord(userDetails);
@@ -38,9 +38,9 @@ function fetchDNSRecord(userDetails) {
             // No ip address given by user. Get one
             //TODO Handle rejection possibility
             wanip.locator().then(function(ipAddress) {
-                log.dump('WAN IP address retrieved:', ipAddress);
+                log.dump('WAN IP address retrieved: ' + ipAddress);
                 // console.log('Using extracted IP address:', ipAddress);
-                userDetails.content = ipAddress;
+                //userDetails.content = ipAddress;
                 log.dump('Checking if IP address is already up-to date');
                 // Check if there's a need to update DNS or it is already in Sync
                 if (isDNSMatching(zoneDetails.content, String(ipAddress))) {
@@ -48,7 +48,7 @@ function fetchDNSRecord(userDetails) {
                     log.dump('DNS is already in sync. Skipping DNS update.');
                 } else {
                     // There's a discrepency, update the DNS record
-                    updateDNSRecord(userDetails, zoneDetails);
+                    updateDNSRecord(userDetails, zoneDetails, ipAddress);
                 }
             });
         } else {
@@ -56,12 +56,12 @@ function fetchDNSRecord(userDetails) {
             log.dump('Checking if IP address is already up-to date');
             // We already have the ip address, we'll continue with updating dns
             // Check if there's a need to update DNS or it is already in Sync
-            if (isDNSMatching(zoneDetails.content, String(userDetails.content))) {
+            if (isDNSMatching(zoneDetails.content, userDetails.content)) {
                 // Skip DNS editing, since it is already up to date
                 log.dump('DNS is already in sync. Skipping DNS update.');
             } else {
                 // There's a discrepency, update the DNS record
-                updateDNSRecord(userDetails, zoneDetails);
+                updateDNSRecord(userDetails, zoneDetails, userDetails.content);
             }
         }
     }, function(errorData) {

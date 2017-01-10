@@ -1,6 +1,6 @@
 const https = require('https');
 
-module.exports.editDNS = function(userDetails, zoneDetails) {
+module.exports.editDNS = function(userDetails, zoneDetails, ipAddress) {
     return new Promise(function(resolve, reject) {
         // Prepare path for request based on zone id
         var zonePath = '/client/v4/zones/' + userDetails.zoneId + '/dns_records/' + zoneDetails.id;
@@ -21,7 +21,7 @@ module.exports.editDNS = function(userDetails, zoneDetails) {
         var body = JSON.stringify({
             type: userDetails.type,
             name: userDetails.domainName,
-            content: userDetails.content,
+            content: ipAddress,
             ttl: userDetails.ttl,
             proxied: userDetails.proxied
         });
