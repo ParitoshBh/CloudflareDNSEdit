@@ -1,6 +1,6 @@
 {
     "name": "cloudflarednsedit",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "Simple Cloudflare DNS editor supporting regular interval checks and email notifications (via mailgun).",
     "main": "cloudflarednsedit.js",
     "scripts": {},
