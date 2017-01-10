@@ -1,6 +1,9 @@
 const log = require('../logging');
 
 module.exports.sendEmail = function(mailgunConfig, type, response) {
+    // Log the action
+    log.dump('Sending email notification');
+
     var api_key = mailgunConfig.apiKey;
     var domain = mailgunConfig.domain;
     var mailgun = require('mailgun-js')({
@@ -13,7 +16,7 @@ module.exports.sendEmail = function(mailgunConfig, type, response) {
     if (type === 'success') {
         emailBody = 'DNS updated successfully to ' + response.content + ' for ' + response.name;
     } else {
-        emailBody = 'Unable to update DNS. Encountered following error:\n\n' + response;
+        emailBody = 'Unable to update DNS. Encountered an error. Please refer server logs for more information.';
     }
 
     var data = {
@@ -26,7 +29,7 @@ module.exports.sendEmail = function(mailgunConfig, type, response) {
     mailgun.messages().send(data, function(error, body) {
         // Log any error message generated
         if (error) {
-            log.dump(error);
+            log.dump('Unable send email notification.');
         } else {
             log.dump('Email notification sent!');
         }
